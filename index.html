@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="calculator.png" type="image/x-icon">
     <title>Calculateur de Degré Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,12 +29,27 @@
         }
         
         header {
+            position: relative;
             text-align: center;
             margin-bottom: 30px;
             padding: 20px;
             animation: fadeIn 1s ease-out;
         }
         
+        .developer-credit {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .developer-credit span {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
         header h1 {
             font-size: 2.5rem;
             color: #2c3e50;
@@ -274,6 +288,9 @@
 <body>
     <div class="container">
         <header>
+          <div class="developer-credit">
+            <span>Developed by [Your Name]</span>
+          </div>
             <h1><i class="fas fa-calculator"></i> Calculateur de Degré Final</h1>
             <p>Calculez votre degré final en fonction de vos notes. Entrez vos résultats ci-dessous et cliquez sur calculer.</p>
         </header>
