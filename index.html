@@ -146,6 +146,50 @@
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
         
+        .subject-results-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin: 40px auto;
+            max-width: 800px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .subject-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .subject-result-card {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-result-name {
+        font-weight: 600;
+        color: #2c3e50;
+        }
+
+        .subject-result-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .subject-pass {
+            color: #27ae60;
+        }
+
+        .subject-fail {
+            color: #e74c3c;
+        }
         .calculation-section {
             background: #fff;
             border-radius: 12px;
@@ -288,9 +332,9 @@
 <body>
     <div class="container">
         <header>
-          <div class="developer-credit">
-            <span>Developed by Mohamed</span>
-          </div>
+        <div class="developer-credit">
+            <span>Developed by [Your Name]</span>
+        </div>
             <h1><i class="fas fa-calculator"></i> Calculateur de Degré Final</h1>
             <p>Calculez votre degré final en fonction de vos notes. Entrez vos résultats ci-dessous et cliquez sur calculer.</p>
         </header>
@@ -483,7 +527,12 @@
                 <p id="resultMessage"></p>
             </div>
         </div>
-        
+        <div class="subject-results-container" id="subjectResultsContainer" style="display: none;">
+            <h2><i class="fas fa-list-ol"></i> Subject Results</h2>
+            <div class="subject-results-grid" id="subjectResultsGrid">
+            <!-- Results will be inserted here by JavaScript -->
+        </div>
+</div>
         <footer>
             <p>Calculateur de Degré Final &copy; 2025 | Conçu pour les étudiants en pharmacie</p>
         </footer>
@@ -519,77 +568,114 @@
         }
         
         function calculateFinalDegree() {
-            // Coefficient 3 subjects
-            const ctEmd1 = parseFloat(document.getElementById('ct-emd1').value) || 0;
-            const ctEmd2 = parseFloat(document.getElementById('ct-emd2').value) || 0;
-            const ctTp = parseFloat(document.getElementById('ct-tp').value) || 0;
-            const ctTd = parseFloat(document.getElementById('ct-td').value) || 0;
-            const ctDegree = calculateSubjectDegree(ctEmd1, ctEmd2, ctTp, ctTd);
-            
-            const phEmd1 = parseFloat(document.getElementById('ph-emd1').value) || 0;
-            const phEmd2 = parseFloat(document.getElementById('ph-emd2').value) || 0;
-            const phTd = parseFloat(document.getElementById('ph-td').value) || 0;
-            const phDegree = calculateSubjectDegree(phEmd1, phEmd2, null, phTd);
-            
-            const pgEmd1 = parseFloat(document.getElementById('pg-emd1').value) || 0;
-            const pgEmd2 = parseFloat(document.getElementById('pg-emd2').value) || 0;
-            const pgTp = parseFloat(document.getElementById('pg-tp').value) || 0;
-            const pgDegree = calculateSubjectDegree(pgEmd1, pgEmd2, pgTp, null);
-            
-            // Coefficient 2 subjects
-            const caEmd1 = parseFloat(document.getElementById('ca-emd1').value) || 0;
-            const caEmd2 = parseFloat(document.getElementById('ca-emd2').value) || 0;
-            const caTp = parseFloat(document.getElementById('ca-tp').value) || 0;
-            const caTd = parseFloat(document.getElementById('ca-td').value) || 0;
-            const caDegree = calculateSubjectDegree(caEmd1, caEmd2, caTp, caTd);
-            
-            const pgnEmd1 = parseFloat(document.getElementById('pgn-emd1').value) || 0;
-            const pgnEmd2 = parseFloat(document.getElementById('pgn-emd2').value) || 0;
-            const pgnTp = parseFloat(document.getElementById('pgn-tp').value) || 0;
-            const pgnTd = parseFloat(document.getElementById('pgn-td').value) || 0;
-            const pgnDegree = calculateSubjectDegree(pgnEmd1, pgnEmd2, pgnTp, pgnTd);
-            
-            // Coefficient 1 subject
-            const semEmd = parseFloat(document.getElementById('sem-emd').value) || 0;
-            const semDegree = semEmd;
-            
-            // Calculate weighted sum
-            const weightedSum = 
-                (ctDegree * 3) + 
-                (phDegree * 3) + 
-                (pgDegree * 3) + 
-                (caDegree * 2) + 
-                (pgnDegree * 2) + 
-                (semDegree * 1);
-            
-            // Final degree (divided by total coefficients = 14)
-            const finalDegree = weightedSum / 14;
-            
-            // Display the result
-            const resultContainer = document.getElementById('resultContainer');
-            const finalResult = document.getElementById('finalResult');
-            const resultMessage = document.getElementById('resultMessage');
-            
-            finalResult.textContent = finalDegree.toFixed(2);
-            resultContainer.style.display = 'block';
-            
-            // Color based on result
-            if (finalDegree >= 10) {
-                finalResult.className = 'result-value result-pass';
-                resultMessage.textContent = 'Félicitations ! Vous avez réussi.';
-                resultMessage.style.color = '#27ae60';
-            } else {
-                finalResult.className = 'result-value result-fail';
-                resultMessage.textContent = 'Vous devez améliorer vos notes.';
-                resultMessage.style.color = '#e74c3c';
-            }
-            
-            // Scroll to result
-            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+    // Coefficient 3 subjects
+    const ctEmd1 = parseFloat(document.getElementById('ct-emd1').value) || 0;
+    const ctEmd2 = parseFloat(document.getElementById('ct-emd2').value) || 0;
+    const ctTp = parseFloat(document.getElementById('ct-tp').value) || 0;
+    const ctTd = parseFloat(document.getElementById('ct-td').value) || 0;
+    const ctDegree = calculateSubjectDegree(ctEmd1, ctEmd2, ctTp, ctTd);
+    
+    const phEmd1 = parseFloat(document.getElementById('ph-emd1').value) || 0;
+    const phEmd2 = parseFloat(document.getElementById('ph-emd2').value) || 0;
+    const phTd = parseFloat(document.getElementById('ph-td').value) || 0;
+    const phDegree = calculateSubjectDegree(phEmd1, phEmd2, null, phTd);
+    
+    const pgEmd1 = parseFloat(document.getElementById('pg-emd1').value) || 0;
+    const pgEmd2 = parseFloat(document.getElementById('pg-emd2').value) || 0;
+    const pgTp = parseFloat(document.getElementById('pg-tp').value) || 0;
+    const pgDegree = calculateSubjectDegree(pgEmd1, pgEmd2, pgTp, null);
+    
+    // Coefficient 2 subjects
+    const caEmd1 = parseFloat(document.getElementById('ca-emd1').value) || 0;
+    const caEmd2 = parseFloat(document.getElementById('ca-emd2').value) || 0;
+    const caTp = parseFloat(document.getElementById('ca-tp').value) || 0;
+    const caTd = parseFloat(document.getElementById('ca-td').value) || 0;
+    const caDegree = calculateSubjectDegree(caEmd1, caEmd2, caTp, caTd);
+    
+    const pgnEmd1 = parseFloat(document.getElementById('pgn-emd1').value) || 0;
+    const pgnEmd2 = parseFloat(document.getElementById('pgn-emd2').value) || 0;
+    const pgnTp = parseFloat(document.getElementById('pgn-tp').value) || 0;
+    const pgnTd = parseFloat(document.getElementById('pgn-td').value) || 0;
+    const pgnDegree = calculateSubjectDegree(pgnEmd1, pgnEmd2, pgnTp, pgnTd);
+    
+    // Coefficient 1 subject
+    const semEmd = parseFloat(document.getElementById('sem-emd').value) || 0;
+    const semDegree = semEmd;
+    
+    // Calculate weighted sum
+    const weightedSum = 
+        (ctDegree * 3) + 
+        (phDegree * 3) + 
+        (pgDegree * 3) + 
+        (caDegree * 2) + 
+        (pgnDegree * 2) + 
+        (semDegree * 1);
+    
+    // Final degree (divided by total coefficients = 14)
+    const finalDegree = weightedSum / 14;
+    
+    // Display the final result
+    const resultContainer = document.getElementById('resultContainer');
+    const finalResult = document.getElementById('finalResult');
+    const resultMessage = document.getElementById('resultMessage');
+    
+    finalResult.textContent = finalDegree.toFixed(2);
+    resultContainer.style.display = 'block';
+    
+    // Color based on result
+    if (finalDegree >= 10) {
+        finalResult.className = 'result-value result-pass';
+        resultMessage.textContent = 'Félicitations ! Vous avez réussi.';
+        resultMessage.style.color = '#27ae60';
+    } else {
+        finalResult.className = 'result-value result-fail';
+        resultMessage.textContent = 'Vous devez améliorer vos notes.';
+        resultMessage.style.color = '#e74c3c';
+    }
+    
+    // Display individual subject results
+    displaySubjectResults([
+        { name: 'Chimie thérapeutique', degree: ctDegree, coeff: 3 },
+        { name: 'Pharmacologie', degree: phDegree, coeff: 3 },
+        { name: 'Pharmacie galénique', degree: pgDegree, coeff: 3 },
+        { name: 'Chimie analytique', degree: caDegree, coeff: 2 },
+        { name: 'Pharmacognosie', degree: pgnDegree, coeff: 2 },
+        { name: 'Sémiologie', degree: semDegree, coeff: 1 }
+    ]);
+    
+    // Scroll to result
+    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function displaySubjectResults(subjects) {
+    const container = document.getElementById('subjectResultsContainer');
+    const grid = document.getElementById('subjectResultsGrid');
+    
+    // Clear previous results
+    grid.innerHTML = '';
+    
+    // Add each subject result
+    subjects.forEach(subject => {
+        const card = document.createElement('div');
+        card.className = 'subject-result-card';
         
-        // Initialize with some sample values for demonstration
-      
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'subject-result-name';
+        nameSpan.textContent = `${subject.name} (Coeff ${subject.coeff})`;
+        
+        const valueSpan = document.createElement('span');
+        valueSpan.className = `subject-result-value ${subject.degree >= 10 ? 'subject-pass' : 'subject-fail'}`;
+        valueSpan.textContent = subject.degree.toFixed(2);
+        
+        card.appendChild(nameSpan);
+        card.appendChild(valueSpan);
+        grid.appendChild(card);
+    });
+    
+    // Show the container
+    container.style.display = 'block';
+    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
     </script>
 </body>
 </html>
