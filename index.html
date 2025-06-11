@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Degré Final</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .subjects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .subject-box {
+            padding: 25px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subject-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .subject-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .coeff-badge {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-group label i {
+            margin-right: 10px;
+            color: #3498db;
+            width: 20px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .calculation-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 20px;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .calculate-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .calculate-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            background: #fff;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            display: none;
+        }
+        
+        .result-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 15px 0;
+            transition: color 0.3s;
+        }
+        
+        .result-pass {
+            color: #27ae60;
+        }
+        
+        .result-fail {
+            color: #e74c3c;
+        }
+        
+        .result-label {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .info-section {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 0.95rem;
+        }
+        
+        .info-section h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .formula {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .subjects-container {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculation-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Calculateur de Degré Final</h1>
+            <p>Calculez votre degré final en fonction de vos notes. Entrez vos résultats ci-dessous et cliquez sur calculer.</p>
+        </header>
+        
+        <div class="subjects-container">
+            <!-- Chimie thérapeutique (Coeff 3) - All components -->
+            <div class="subject-box">
+                <div class="subject-header">
+                    <div class="subject-title">Chimie thérapeutique</div>
+                    <div class="coeff-badge">Coefficient: 3</div>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 1</label>
+                    <input type="number" id="ct-emd1" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 2</label>
+                    <input type="number" id="ct-emd2" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-flask"></i> TP Score</label>
+                    <input type="number" id="ct-tp" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-book"></i> TD Score</label>
+                    <input type="number" id="ct-td" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+            </div>
+            
+            <!-- Pharmacologie (Coeff 3) - EMD1, EMD2, TD -->
+            <div class="subject-box">
+                <div class="subject-header">
+                    <div class="subject-title">Pharmacologie</div>
+                    <div class="coeff-badge">Coefficient: 3</div>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 1</label>
+                    <input type="number" id="ph-emd1" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 2</label>
+                    <input type="number" id="ph-emd2" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-book"></i> TD Score</label>
+                    <input type="number" id="ph-td" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Note</h3>
+                    <p>Pharmacologie n'a pas de composant TP.</p>
+                </div>
+            </div>
+            
+            <!-- Pharmacie galénique (Coeff 3) - EMD1, EMD2, TP -->
+            <div class="subject-box">
+                <div class="subject-header">
+                    <div class="subject-title">Pharmacie galénique</div>
+                    <div class="coeff-badge">Coefficient: 3</div>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 1</label>
+                    <input type="number" id="pg-emd1" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 2</label>
+                    <input type="number" id="pg-emd2" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-flask"></i> TP Score</label>
+                    <input type="number" id="pg-tp" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Note</h3>
+                    <p>Pharmacie galénique n'a pas de composant TD.</p>
+                </div>
+            </div>
+            
+            <!-- Chimie analytique (Coeff 2) - All components -->
+            <div class="subject-box">
+                <div class="subject-header">
+                    <div class="subject-title">Chimie analytique</div>
+                    <div class="coeff-badge">Coefficient: 2</div>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 1</label>
+                    <input type="number" id="ca-emd1" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 2</label>
+                    <input type="number" id="ca-emd2" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-flask"></i> TP Score</label>
+                    <input type="number" id="ca-tp" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-book"></i> TD Score</label>
+                    <input type="number" id="ca-td" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+            </div>
+            
+            <!-- Pharmacognosie (Coeff 2) - All components -->
+            <div class="subject-box">
+                <div class="subject-header">
+                    <div class="subject-title">Pharmacognosie</div>
+                    <div class="coeff-badge">Coefficient: 2</div>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 1</label>
+                    <input type="number" id="pgn-emd1" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD 2</label>
+                    <input type="number" id="pgn-emd2" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-flask"></i> TP Score</label>
+                    <input type="number" id="pgn-tp" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-book"></i> TD Score</label>
+                    <input type="number" id="pgn-td" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+            </div>
+            
+            <!-- Sémiologie (Coeff 1) - Only EMD -->
+            <div class="subject-box">
+                <div class="subject-header">
+                    <div class="subject-title">Sémiologie</div>
+                    <div class="coeff-badge">Coefficient: 1</div>
+                </div>
+                
+                <div class="input-group">
+                    <label><i class="fas fa-file-alt"></i> EMD Score</label>
+                    <input type="number" id="sem-emd" min="0" max="20" step="0.01" placeholder="Note (0-20)">
+                </div>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Note</h3>
+                    <p>Sémiologie n'a pas de composants TP ou TD. Seul le score EMD est utilisé.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="calculation-section">
+            <div class="info-section">
+                <h3><i class="fas fa-calculator"></i> Méthode de Calcul</h3>
+                <p>Le degré final est calculé en utilisant les étapes suivantes:</p>
+                <ol>
+                    <li>Calculer le degré de chaque matière en fonction des composants disponibles</li>
+                    <li>Multiplier chaque degré par son coefficient</li>
+                    <li>Additionner tous les degrés pondérés</li>
+                    <li>Diviser le total par la somme des coefficients (14)</li>
+                </ol>
+                
+                <div class="formula">
+                    Degré Final = (Σ(Degré Matière × Coefficient)) ÷ 14
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button class="calculate-btn pulse" onclick="calculateFinalDegree()">
+                    <i class="fas fa-calculator"></i> Calculer Degré Final
+                </button>
+            </div>
+            
+            <div class="result-container" id="resultContainer">
+                <span class="result-label">Votre Degré Final:</span>
+                <div class="result-value" id="finalResult">0.00</div>
+                <p id="resultMessage"></p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Calculateur de Degré Final &copy; 2025 | Conçu pour les étudiants en pharmacie</p>
+        </footer>
+    </div>
+
+    <script>
+        function calculateSubjectDegree(emd1, emd2, tp, td) {
+            // If all components are present
+            if (emd1 !== null && emd2 !== null && tp !== null && td !== null) {
+                return ((emd1 + emd2) / 2 + (tp + td) / 2) / 2;
+            }
+            
+            // If EMD1, EMD2 and TP are present
+            if (emd1 !== null && emd2 !== null && tp !== null) {
+                return ((emd1 + emd2) / 2 + tp) / 2;
+            }
+            
+            // If EMD1, EMD2 and TD are present
+            if (emd1 !== null && emd2 !== null && td !== null) {
+                return ((emd1 + emd2) / 2 + td) / 2;
+            }
+            
+            // If only EMD1 and EMD2 are present
+            if (emd1 !== null && emd2 !== null) {
+                return (emd1 + emd2) / 2;
+            }
+            
+            // If only one EMD is present
+            if (emd1 !== null) return emd1;
+            if (emd2 !== null) return emd2;
+            
+            return 0;
+        }
+        
+        function calculateFinalDegree() {
+            // Coefficient 3 subjects
+            const ctEmd1 = parseFloat(document.getElementById('ct-emd1').value) || 0;
+            const ctEmd2 = parseFloat(document.getElementById('ct-emd2').value) || 0;
+            const ctTp = parseFloat(document.getElementById('ct-tp').value) || 0;
+            const ctTd = parseFloat(document.getElementById('ct-td').value) || 0;
+            const ctDegree = calculateSubjectDegree(ctEmd1, ctEmd2, ctTp, ctTd);
+            
+            const phEmd1 = parseFloat(document.getElementById('ph-emd1').value) || 0;
+            const phEmd2 = parseFloat(document.getElementById('ph-emd2').value) || 0;
+            const phTd = parseFloat(document.getElementById('ph-td').value) || 0;
+            const phDegree = calculateSubjectDegree(phEmd1, phEmd2, null, phTd);
+            
+            const pgEmd1 = parseFloat(document.getElementById('pg-emd1').value) || 0;
+            const pgEmd2 = parseFloat(document.getElementById('pg-emd2').value) || 0;
+            const pgTp = parseFloat(document.getElementById('pg-tp').value) || 0;
+            const pgDegree = calculateSubjectDegree(pgEmd1, pgEmd2, pgTp, null);
+            
+            // Coefficient 2 subjects
+            const caEmd1 = parseFloat(document.getElementById('ca-emd1').value) || 0;
+            const caEmd2 = parseFloat(document.getElementById('ca-emd2').value) || 0;
+            const caTp = parseFloat(document.getElementById('ca-tp').value) || 0;
+            const caTd = parseFloat(document.getElementById('ca-td').value) || 0;
+            const caDegree = calculateSubjectDegree(caEmd1, caEmd2, caTp, caTd);
+            
+            const pgnEmd1 = parseFloat(document.getElementById('pgn-emd1').value) || 0;
+            const pgnEmd2 = parseFloat(document.getElementById('pgn-emd2').value) || 0;
+            const pgnTp = parseFloat(document.getElementById('pgn-tp').value) || 0;
+            const pgnTd = parseFloat(document.getElementById('pgn-td').value) || 0;
+            const pgnDegree = calculateSubjectDegree(pgnEmd1, pgnEmd2, pgnTp, pgnTd);
+            
+            // Coefficient 1 subject
+            const semEmd = parseFloat(document.getElementById('sem-emd').value) || 0;
+            const semDegree = semEmd;
+            
+            // Calculate weighted sum
+            const weightedSum = 
+                (ctDegree * 3) + 
+                (phDegree * 3) + 
+                (pgDegree * 3) + 
+                (caDegree * 2) + 
+                (pgnDegree * 2) + 
+                (semDegree * 1);
+            
+            // Final degree (divided by total coefficients = 14)
+            const finalDegree = weightedSum / 14;
+            
+            // Display the result
+            const resultContainer = document.getElementById('resultContainer');
+            const finalResult = document.getElementById('finalResult');
+            const resultMessage = document.getElementById('resultMessage');
+            
+            finalResult.textContent = finalDegree.toFixed(2);
+            resultContainer.style.display = 'block';
+            
+            // Color based on result
+            if (finalDegree >= 10) {
+                finalResult.className = 'result-value result-pass';
+                resultMessage.textContent = 'Félicitations ! Vous avez réussi.';
+                resultMessage.style.color = '#27ae60';
+            } else {
+                finalResult.className = 'result-value result-fail';
+                resultMessage.textContent = 'Vous devez améliorer vos notes.';
+                resultMessage.style.color = '#e74c3c';
+            }
+            
+            // Scroll to result
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Initialize with some sample values for demonstration
+      
+    </script>
+</body>
+</html>
