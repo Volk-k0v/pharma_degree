@@ -437,6 +437,24 @@ body.dark-mode .what-if-result {
             font-size: 1rem;
         }
         
+        .success-arrow {
+    color: #27ae60;
+    margin-left: 5px;
+}
+
+.warning-arrow {
+    color: #e74c3c;
+    margin-left: 5px;
+}
+
+.subject-result-value i {
+    transition: transform 0.3s;
+}
+
+.subject-result-card:hover .subject-result-value i {
+    transform: scale(1.3);
+}
+
         footer {
             text-align: center;
             margin-top: 40px;
@@ -913,10 +931,8 @@ function displaySubjectResults(subjects) {
     const container = document.getElementById('subjectResultsContainer');
     const grid = document.getElementById('subjectResultsGrid');
     
-    // Clear previous results
     grid.innerHTML = '';
     
-    // Add each subject result
     subjects.forEach(subject => {
         const card = document.createElement('div');
         card.className = 'subject-result-card';
@@ -927,17 +943,21 @@ function displaySubjectResults(subjects) {
         
         const valueSpan = document.createElement('span');
         valueSpan.className = `subject-result-value ${subject.degree >= 10 ? 'subject-pass' : 'subject-fail'}`;
-        valueSpan.textContent = subject.degree.toFixed(2);
+        
+        // Add arrow icon based on performance
+        const arrowIcon = document.createElement('i');
+        arrowIcon.className = `fas ${subject.degree >= 10 ? 'fa-arrow-up success-arrow' : 'fa-arrow-down warning-arrow'}`;
+        
+        valueSpan.appendChild(document.createTextNode(subject.degree.toFixed(2) + ' '));
+        valueSpan.appendChild(arrowIcon);
         
         card.appendChild(nameSpan);
         card.appendChild(valueSpan);
         grid.appendChild(card);
     });
     
-    // Show the container
     container.style.display = 'block';
-    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
+}
     </script>
 </body>
 </html>
