@@ -35,100 +35,7 @@
             padding: 20px;
             animation: fadeIn 1s ease-out;
         }
-                   /* Dark Mode Toggle */
-.dark-mode-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-}
-
-.toggle-label {
-    position: relative;
-    display: block;
-    width: 60px;
-    height: 30px;
-    background: #e3e3e3;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.toggle-label i {
-    position: absolute;
-    top: 6px;
-    font-size: 18px;
-    transition: all 0.3s ease;
-}
-
-.toggle-label .fa-moon {
-    left: 8px;
-    color: #333;
-}
-
-.toggle-label .fa-sun {
-    right: 8px;
-    color: #ffd700;
-    opacity: 0;
-}
-
-.toggle-ball {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 24px;
-    height: 24px;
-    background: #fff;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-#darkModeSwitch {
-    display: none;
-}
-
-#darkModeSwitch:checked + .toggle-label {
-    background: #333;
-}
-
-#darkModeSwitch:checked + .toggle-label .fa-moon {
-    opacity: 0;
-}
-
-#darkModeSwitch:checked + .toggle-label .fa-sun {
-    opacity: 1;
-}
-
-#darkModeSwitch:checked + .toggle-label .toggle-ball {
-    transform: translateX(30px);
-    background: #ffd700;
-}
-
-/* Dark Mode Styles */
-body.dark-mode {
-    background: #121212;
-    color: #f1f1f1;
-}
-
-body.dark-mode .subject-box,
-body.dark-mode .calculation-section,
-body.dark-mode .result-container,
-body.dark-mode .subject-results-container {
-    background: #1e1e1e;
-    border-color: #333;
-    color: #f1f1f1;
-}
-
-body.dark-mode .subject-title,
-body.dark-mode .input-group label {
-    color: #f1f1f1;
-}
-
-body.dark-mode input {
-    background: #333;
-    color: #f1f1f1;
-    border-color: #444;
-}
+        
         .developer-credit {
             position: absolute;
             top: 15px;
@@ -292,61 +199,7 @@ body.dark-mode input {
             max-width: 800px;
             margin: 40px auto;
         }
-        .what-if-section {
-    margin-top: 30px;
-    padding: 20px;
-    background: #e3f2fd;
-    border-radius: 10px;
-}
-
-.what-if-controls {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 10px;
-    align-items: center;
-    margin: 15px 0;
-}
-
-.what-if-controls label {
-    font-weight: 600;
-}
-
-.what-if-controls select,
-.what-if-controls input {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-.what-if-controls button {
-    grid-column: span 2;
-    padding: 10px;
-    background: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.what-if-controls button:hover {
-    background: #2980b9;
-}
-
-.what-if-result {
-    padding: 10px;
-    border-radius: 5px;
-    background: white;
-    display: none;
-}
-
-body.dark-mode .what-if-section {
-    background: #2d3748;
-}
-
-body.dark-mode .what-if-result {
-    background: #1e1e1e;
-}
+        
         .btn-container {
             text-align: center;
             margin: 30px 0;
@@ -437,24 +290,6 @@ body.dark-mode .what-if-result {
             font-size: 1rem;
         }
         
-        .success-arrow {
-    color: #27ae60;
-    margin-left: 5px;
-}
-
-.warning-arrow {
-    color: #e74c3c;
-    margin-left: 5px;
-}
-
-.subject-result-value i {
-    transition: transform 0.3s;
-}
-
-.subject-result-card:hover .subject-result-value i {
-    transform: scale(1.3);
-}
-
         footer {
             text-align: center;
             margin-top: 40px;
@@ -507,7 +342,7 @@ body.dark-mode .what-if-result {
                 <label for="darkModeSwitch" class="toggle-label">
                     <i class="fas fa-moon"></i>
                     <i class="fas fa-sun"></i>
-                    <span class="toggle-ball"></span>
+                <span class="toggle-ball"></span>
                 </label>
             </div>
         </header>
@@ -673,24 +508,6 @@ body.dark-mode .what-if-result {
         </div>
         
         <div class="calculation-section">
-            <div class="what-if-section">
-                <h3><i class="fas fa-question-circle"></i> What-If Calculator</h3>
-                <div class="what-if-controls">
-                    <label>Select Subject:</label>
-                    <select id="whatIfSubject">
-                        <option value="ct">Chimie thérapeutique</option>
-                        <option value="ph">Pharmacologie</option>
-                        <option value="pg">Pharmacie galénique</option>
-                        <option value="ca">Chimie analytique</option>
-                        <option value="pgn">Pharmacognosie</option>
-                        <option value="sem">Sémiologie</option>
-                    </select>
-                    <label>Target Score:</label>
-                    <input type="number" id="targetScore" min="0" max="20" step="0.1" value="10">
-                    <button onclick="calculateWhatIf()">Calculate Required</button>
-                </div>
-                <div class="what-if-result" id="whatIfResult"></div>
-            </div>
             <div class="info-section">
                 <h3><i class="fas fa-calculator"></i> Méthode de Calcul</h3>
                 <p>Le degré final est calculé en utilisant les étapes suivantes:</p>
@@ -730,95 +547,6 @@ body.dark-mode .what-if-result {
     </div>
 
     <script>
-        // Dark Mode Toggle
-const darkModeSwitch = document.getElementById('darkModeSwitch');
-darkModeSwitch.addEventListener('change', () => {
-    document.body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', darkModeSwitch.checked);
-});
-
-// Check for saved preference
-if (localStorage.getItem('darkMode') === 'true') {
-    darkModeSwitch.checked = true;
-    document.body.classList.add('dark-mode');
-}
-
-function calculateWhatIf() {
-    const subject = document.getElementById('whatIfSubject').value;
-    const targetScore = parseFloat(document.getElementById('targetScore').value);
-    
-    // Get current scores
-    let currentScores = {};
-    const subjects = ['ct', 'ph', 'pg', 'ca', 'pgn', 'sem'];
-    
-    subjects.forEach(sub => {
-        currentScores[sub] = calculateSubjectDegree(
-            parseFloat(document.getElementById(`${sub}-emd1`).value) || 0,
-            document.getElementById(`${sub}-emd2`) ? parseFloat(document.getElementById(`${sub}-emd2`).value) || 0 : null,
-            document.getElementById(`${sub}-tp`) ? parseFloat(document.getElementById(`${sub}-tp`).value) || 0 : null,
-            document.getElementById(`${sub}-td`) ? parseFloat(document.getElementById(`${sub}-td`).value) || 0 : null
-        );
-    });
-    
-    // Calculate current total
-    const currentTotal = 
-        (currentScores.ct * 3) + 
-        (currentScores.ph * 3) + 
-        (currentScores.pg * 3) + 
-        (currentScores.ca * 2) + 
-        (currentScores.pgn * 2) + 
-        (currentScores.sem * 1);
-    
-    // Calculate required score
-    const currentWithoutSubject = currentTotal - (currentScores[subject] * getCoefficient(subject));
-    const required = ((targetScore * 14) - currentWithoutSubject) / getCoefficient(subject);
-    
-    // Display result
-    const resultDiv = document.getElementById('whatIfResult');
-    resultDiv.style.display = 'block';
-    
-    if (required > 20) {
-        resultDiv.innerHTML = `
-            <p>To achieve a final score of ${targetScore.toFixed(1)}, you would need:</p>
-            <p class="what-if-highlight">${getSubjectName(subject)}: ${required.toFixed(1)}/20</p>
-            <p class="what-if-warning">This is impossible (maximum is 20/20)</p>
-        `;
-    } else if (required > 0) {
-        resultDiv.innerHTML = `
-            <p>To achieve a final score of ${targetScore.toFixed(1)}, you would need:</p>
-            <p class="what-if-highlight">${getSubjectName(subject)}: ${required.toFixed(1)}/20</p>
-            <p>Current: ${currentScores[subject].toFixed(1)}/20</p>
-            <p>Difference: ${(required - currentScores[subject]).toFixed(1)} points</p>
-        `;
-    } else {
-        resultDiv.innerHTML = `
-            <p>You already exceed the target score of ${targetScore.toFixed(1)}!</p>
-            <p>Current final score would be: ${(currentTotal/14).toFixed(1)}</p>
-        `;
-    }
-}
-
-function getCoefficient(subject) {
-    const coeffs = {
-        'ct': 3, 'ph': 3, 'pg': 3,
-        'ca': 2, 'pgn': 2,
-        'sem': 1
-    };
-    return coeffs[subject];
-}
-
-function getSubjectName(subject) {
-    const names = {
-        'ct': 'Chimie thérapeutique',
-        'ph': 'Pharmacologie',
-        'pg': 'Pharmacie galénique',
-        'ca': 'Chimie analytique',
-        'pgn': 'Pharmacognosie',
-        'sem': 'Sémiologie'
-    };
-    return names[subject];
-}
-
         function calculateSubjectDegree(emd1, emd2, tp, td) {
             // If all components are present
             if (emd1 !== null && emd2 !== null && tp !== null && td !== null) {
@@ -931,8 +659,10 @@ function displaySubjectResults(subjects) {
     const container = document.getElementById('subjectResultsContainer');
     const grid = document.getElementById('subjectResultsGrid');
     
+    // Clear previous results
     grid.innerHTML = '';
     
+    // Add each subject result
     subjects.forEach(subject => {
         const card = document.createElement('div');
         card.className = 'subject-result-card';
@@ -943,21 +673,17 @@ function displaySubjectResults(subjects) {
         
         const valueSpan = document.createElement('span');
         valueSpan.className = `subject-result-value ${subject.degree >= 10 ? 'subject-pass' : 'subject-fail'}`;
-        
-        // Add arrow icon based on performance
-        const arrowIcon = document.createElement('i');
-        arrowIcon.className = `fas ${subject.degree >= 10 ? 'fa-arrow-up success-arrow' : 'fa-arrow-down warning-arrow'}`;
-        
-        valueSpan.appendChild(document.createTextNode(subject.degree.toFixed(2) + ' '));
-        valueSpan.appendChild(arrowIcon);
+        valueSpan.textContent = subject.degree.toFixed(2);
         
         card.appendChild(nameSpan);
         card.appendChild(valueSpan);
         grid.appendChild(card);
     });
     
+    // Show the container
     container.style.display = 'block';
-}
+    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
     </script>
 </body>
 </html>
