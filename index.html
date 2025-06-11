@@ -36,6 +36,101 @@
             animation: fadeIn 1s ease-out;
         }
         
+        /* Dark Mode Toggle */
+.dark-mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.toggle-label {
+    position: relative;
+    display: block;
+    width: 60px;
+    height: 30px;
+    background: #e3e3e3;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-label i {
+    position: absolute;
+    top: 6px;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.toggle-label .fa-moon {
+    left: 8px;
+    color: #333;
+}
+
+.toggle-label .fa-sun {
+    right: 8px;
+    color: #ffd700;
+    opacity: 0;
+}
+
+.toggle-ball {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+#darkModeSwitch {
+    display: none;
+}
+
+#darkModeSwitch:checked + .toggle-label {
+    background: #333;
+}
+
+#darkModeSwitch:checked + .toggle-label .fa-moon {
+    opacity: 0;
+}
+
+#darkModeSwitch:checked + .toggle-label .fa-sun {
+    opacity: 1;
+}
+
+#darkModeSwitch:checked + .toggle-label .toggle-ball {
+    transform: translateX(30px);
+    background: #ffd700;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background: #121212;
+    color: #f1f1f1;
+}
+
+body.dark-mode .subject-box,
+body.dark-mode .calculation-section,
+body.dark-mode .result-container,
+body.dark-mode .subject-results-container {
+    background: #1e1e1e;
+    border-color: #333;
+    color: #f1f1f1;
+}
+
+body.dark-mode .subject-title,
+body.dark-mode .input-group label {
+    color: #f1f1f1;
+}
+
+body.dark-mode input {
+    background: #333;
+    color: #f1f1f1;
+    border-color: #444;
+}
+
         .developer-credit {
             position: absolute;
             top: 15px;
@@ -547,6 +642,18 @@
     </div>
 
     <script>
+        // Dark Mode Toggle
+const darkModeSwitch = document.getElementById('darkModeSwitch');
+darkModeSwitch.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', darkModeSwitch.checked);
+});
+
+// Check for saved preference
+if (localStorage.getItem('darkMode') === 'true') {
+    darkModeSwitch.checked = true;
+    document.body.classList.add('dark-mode');
+}
         function calculateSubjectDegree(emd1, emd2, tp, td) {
             // If all components are present
             if (emd1 !== null && emd2 !== null && tp !== null && td !== null) {
