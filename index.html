@@ -723,12 +723,12 @@ if (localStorage.getItem('darkMode') === 'true') {
             
             // If EMD1, EMD2 and TP are present
             if (emd1 !== null && emd2 !== null && tp !== null) {
-                return ((emd1 + emd2) / 2 + tp) / 2;
+                return (emd1 + emd2 + tp) / 3;
             }
             
             // If EMD1, EMD2 and TD are present
             if (emd1 !== null && emd2 !== null && td !== null) {
-                return ((emd1 + emd2) / 2 + td) / 2;
+                return (emd1 + emd2 + td) / 3;
             }
             
             // If only EMD1 and EMD2 are present
